@@ -5,30 +5,81 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>roast my roll – gratis im App Store</title>
 <meta name="description" content="roast my roll – deine Galerie, gnadenlos geroastet. Gratis im App Store.">
-<meta http-equiv="refresh" content="0; url=https://apps.apple.com/app/roast-my-roll/id6830547374">
 <style>
 html,body{margin:0;background:#111;color:#F4F1EA;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-main{max-width:480px;margin:0 auto;padding:56px 20px;text-align:center}
-.brand{display:flex;justify-content:center;gap:8px;margin-bottom:28px}
+main{max-width:480px;margin:0 auto;padding:48px 20px 40px;text-align:center}
+.brand{display:flex;justify-content:center;gap:8px;margin-bottom:24px}
 .chip{font-weight:800;font-size:28px;padding:2px 12px 6px;border-radius:12px;color:#111}
 .c1{background:#D7FF3A;transform:rotate(-3deg)}.c2{background:#FF3D7F;transform:rotate(2deg)}.c3{background:#2B3BFF;color:#fff;transform:rotate(-1deg)}
-.cta{display:block;background:#D7FF3A;color:#111;font-weight:800;font-size:1.3rem;padding:20px;border-radius:16px;text-decoration:none;margin:24px 0 12px}
-p{opacity:.75;font-size:.9rem;line-height:1.5}
+.cta{display:block;background:#D7FF3A;color:#111;font-weight:800;font-size:1.3rem;padding:20px;border-radius:16px;text-decoration:none;margin:20px 0 12px}
+p{opacity:.8;font-size:.95rem;line-height:1.5;margin:8px 0}
+.inapp{display:none;background:#1E1E1E;border:2px solid #D7FF3A;border-radius:16px;padding:18px 18px 14px;margin:8px 0 18px;text-align:left}
+.inapp h2{font-size:1.15rem;margin:0 0 10px;color:#D7FF3A}
+.inapp ol{margin:0;padding-left:22px;line-height:1.7;font-size:1.02rem}
+.dots{display:inline-block;background:#F4F1EA;color:#111;border-radius:8px;padding:0 8px;font-weight:800;letter-spacing:1px}
+.arrow{position:fixed;top:6px;right:14px;font-size:44px;line-height:1;color:#D7FF3A;display:none;animation:b 1s ease-in-out infinite}
+@keyframes b{50%{transform:translate(4px,-6px)}}
+@media (prefers-reduced-motion:reduce){.arrow{animation:none}}
+.copy{background:none;border:1px solid #555;color:#F4F1EA;border-radius:12px;padding:12px 16px;font-size:.95rem;margin-top:6px;width:100%}
+body.in .inapp,body.in .arrow{display:block}
 </style>
-<script>location.replace('https://apps.apple.com/app/roast-my-roll/id6830547374');</script>
 </head>
 <body>
+<div class="arrow" aria-hidden="true">↗</div>
 <main>
   <div class="brand"><span class="chip c1">roast</span><span class="chip c2">my</span><span class="chip c3">roll.</span></div>
-  <a class="cta" href="https://apps.apple.com/app/roast-my-roll/id6830547374">Gratis im App Store laden</a>
+
+  <div class="inapp" id="inapp">
+    <h2 id="h">So kommst du zum App Store</h2>
+    <ol id="steps">
+      <li>Tippe oben rechts auf <span class="dots">⋯</span></li>
+      <li>Wähle <strong>„Im Browser öffnen“</strong></li>
+      <li>Dann geht der App Store automatisch auf.</li>
+    </ol>
+    <button class="copy" id="copy" type="button">Link kopieren (für Safari)</button>
+  </div>
+
+  <a class="cta" id="cta" href="https://apps.apple.com/de/app/roast-my-roll/id6830547374">Gratis im App Store laden</a>
   <p id="msg">Du wirst gleich weitergeleitet. Klappt nicht? Tippe oben rechts auf <strong>⋯</strong> → <strong>Im Browser öffnen</strong>.</p>
 </main>
 <script>
-if (!/^de/i.test(navigator.language || '')) {
-  document.documentElement.lang = 'en';
-  document.querySelector('.cta').textContent = 'Get it free on the App Store';
-  document.getElementById('msg').innerHTML = 'Redirecting you now. Not working? Tap <strong>⋯</strong> in the top right → <strong>Open in browser</strong>.';
-}
+(function () {
+  /* Store-Land aus der Browsersprache. Länder ohne Freischaltung landen im deutschen Store. Neue Länder: in LIVE ergänzen. */
+  var LIVE = ['de', 'at', 'ch', 'gb', 'ie', 'us', 'ca', 'nl', 'dk', 'se', 'no', 'fi', 'is', 'hr'];
+  var BARE = { en: 'gb', da: 'dk', sv: 'se', nb: 'no', nn: 'no', no: 'no', fi: 'fi', is: 'is', hr: 'hr', nl: 'nl', de: 'de' };
+  var loc = (navigator.language || 'de-DE').toLowerCase().split('-');
+  var cc = loc[1] && LIVE.indexOf(loc[1]) >= 0 ? loc[1] : (BARE[loc[0]] || 'de');
+  var url = 'https://apps.apple.com/' + cc + '/app/roast-my-roll/id6830547374';
+  var de = /^de/i.test(navigator.language || '');
+  var ua = navigator.userAgent || '';
+  /* In-App-Browser blockieren App-Store-Links: TikTok, Instagram, Facebook, Snapchat, LinkedIn … */
+  var known = /BytedanceWebview|musical_ly|TikTok|Trill|Instagram|FBAN|FBAV|FB_IAB|Snapchat|LinkedInApp|Pinterest|Line\/|GSA\//i.test(ua);
+  /* Echte Browser (Safari, Chrome, Firefox, Edge) haben "Safari/" im User-Agent – eingebettete iOS-Browser (WKWebView) nicht. */
+  var realBrowser = /Safari\//.test(ua) || !/iPhone|iPad|iPod/.test(ua);
+  var inApp = known || !realBrowser;
+  var $ = function (id) { return document.getElementById(id); };
+  $('cta').href = url;
+  if (!de) {
+    document.documentElement.lang = 'en';
+    $('cta').textContent = 'Get it free on the App Store';
+    $('msg').innerHTML = 'Redirecting you now. Not working? Tap <strong>⋯</strong> in the top right → <strong>Open in browser</strong>.';
+    $('h').textContent = 'How to get to the App Store';
+    $('steps').innerHTML = '<li>Tap <span class="dots">⋯</span> in the top right</li><li>Choose <strong>“Open in browser”</strong></li><li>The App Store then opens by itself.</li>';
+    $('copy').textContent = 'Copy link (for Safari)';
+  }
+  if (inApp) {
+    document.body.className = 'in';
+    $('msg').textContent = de ? 'Der Button funktioniert in dieser App manchmal nicht – dann wie oben beschrieben im Browser öffnen.' : 'The button sometimes doesn’t work inside this app – if so, open it in your browser as shown above.';
+  } else {
+    setTimeout(function () { location.replace(url); }, 150);
+  }
+  $('copy').addEventListener('click', function () {
+    var link = 'https://webster286.github.io/roast-my-roll/app/';
+    var done = function () { $('copy').textContent = de ? 'Kopiert ✓ – jetzt in Safari einfügen' : 'Copied ✓ – now paste it into Safari'; };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(done, function () { prompt('', link); });
+    else prompt('', link);
+  });
+})();
 </script>
 </body>
 </html>
