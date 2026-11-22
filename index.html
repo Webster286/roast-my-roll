@@ -53,7 +53,10 @@ body.in .inapp,body.in .arrow{display:block}
   var de = /^de/i.test(navigator.language || '');
   var ua = navigator.userAgent || '';
   /* In-App-Browser blockieren App-Store-Links: TikTok, Instagram, Facebook, Snapchat, LinkedIn … */
-  var inApp = /BytedanceWebview|musical_ly|TikTok|Instagram|FBAN|FBAV|FB_IAB|Snapchat|LinkedInApp|Pinterest|Line\//i.test(ua);
+  var known = /BytedanceWebview|musical_ly|TikTok|Trill|Instagram|FBAN|FBAV|FB_IAB|Snapchat|LinkedInApp|Pinterest|Line\/|GSA\//i.test(ua);
+  /* Echte Browser (Safari, Chrome, Firefox, Edge) haben "Safari/" im User-Agent – eingebettete iOS-Browser (WKWebView) nicht. */
+  var realBrowser = /Safari\//.test(ua) || !/iPhone|iPad|iPod/.test(ua);
+  var inApp = known || !realBrowser;
   var $ = function (id) { return document.getElementById(id); };
   $('cta').href = url;
   if (!de) {
