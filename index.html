@@ -4,30 +4,44 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>roast my roll – gratis im App Store</title>
-<meta name="description" content="roast my roll – dein Jahr, dein Monat, dein Trip: ehrlich geroastet. Alles passiert auf deinem iPhone.">
-<link rel="stylesheet" href="style.css">
+<meta name="description" content="roast my roll – deine Galerie, gnadenlos geroastet. Gratis im App Store.">
+<meta http-equiv="refresh" content="2; url=https://apps.apple.com/de/app/roast-my-roll/id6830547374">
+<style>
+html,body{margin:0;background:#111;color:#F4F1EA;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+main{max-width:480px;margin:0 auto;padding:56px 20px;text-align:center}
+.brand{display:flex;justify-content:center;gap:8px;margin-bottom:28px}
+.chip{font-weight:800;font-size:28px;padding:2px 12px 6px;border-radius:12px;color:#111}
+.c1{background:#D7FF3A;transform:rotate(-3deg)}.c2{background:#FF3D7F;transform:rotate(2deg)}.c3{background:#2B3BFF;color:#fff;transform:rotate(-1deg)}
+.cta{display:block;background:#D7FF3A;color:#111;font-weight:800;font-size:1.3rem;padding:20px;border-radius:16px;text-decoration:none;margin:24px 0 12px}
+p{opacity:.75;font-size:.9rem;line-height:1.5}
+</style>
+<script>
+/* Store-Land aus der Browsersprache. Länder ohne Freischaltung landen im deutschen Store. Neue Länder: in LIVE ergänzen. */
+(function () {
+  var LIVE = ['de', 'at', 'ch', 'gb', 'ie', 'us', 'ca', 'nl', 'dk', 'se', 'no', 'fi', 'is', 'hr'];
+  var BARE = { en: 'gb', da: 'dk', sv: 'se', nb: 'no', nn: 'no', no: 'no', fi: 'fi', is: 'is', hr: 'hr', nl: 'nl', de: 'de' };
+  var loc = (navigator.language || 'de-DE').toLowerCase().split('-');
+  var cc = loc[1] && LIVE.indexOf(loc[1]) >= 0 ? loc[1] : (BARE[loc[0]] || 'de');
+  if (LIVE.indexOf(cc) < 0) cc = 'de';
+  var url = 'https://apps.apple.com/' + cc + '/app/roast-my-roll/id6830547374';
+  window.__store = url;
+  location.replace(url);
+})();
+</script>
 </head>
 <body>
 <main>
-  <div class="brand" aria-label="roast my roll"><span class="chip c1">roast</span><span class="chip c2">my</span><span class="chip c3">roll.</span></div>
-  <h1>Deine Fotos verraten dich.</h1>
-  <a class="cta" href="https://apps.apple.com/app/roast-my-roll/id6830547374">Gratis im App Store laden</a>
-  <p class="hint">Button reagiert nicht? Tippe oben rechts auf <strong>⋯</strong> → <strong>Im Browser öffnen</strong> und dann noch einmal auf den Button.</p>
-  <p>roast my roll macht aus deinem Fotojahr, einem Album oder deinen gemeinsamen Fotos mit einer Person einen Story-Rückblick – mit ehrlichen Sprüchen statt Kitsch.</p>
-  <div class="box">
-    <strong>Alles bleibt auf deinem iPhone.</strong> Kein Account, kein Server, kein Tracking. Fotos landen nur in deiner Story, wenn du das beim Teilen ausdrücklich wählst.
-  </div>
-
-  <h2>Support &amp; Kontakt</h2>
-  <p>Fragen, Fehler oder Ideen? Schreib an <a href="mailto:roastmyroll@gmx.net">roastmyroll@gmx.net</a>.</p>
-
-  <h2>Häufige Fragen</h2>
-  <p><strong>Es werden zu wenige Fotos gezählt.</strong><br>Prüfe unter Einstellungen → Apps → roast my roll → Fotos, ob „Voller Zugriff“ aktiv ist. Mit „Beschränkter Zugriff“ sieht die App nur die freigegebenen Bilder.</p>
-  <p><strong>Mein Album taucht nicht auf.</strong><br>Die App zeigt Alben mit mindestens 10 Fotos. Alben in Ordnern oder geteilte iCloud-Alben werden von iOS teilweise nicht an Apps herausgegeben – leg das Album dann einmal direkt unter „Meine Alben“ an.</p>
-  <p><strong>Wie funktioniert der Duo-Modus?</strong><br>Öffne in der Fotos-App „Personen“, wähle die Person, markiere die gemeinsamen Fotos und lege sie in ein neues Album. Dieses Album wählst du dann in roast my roll aus.</p>
-  <p><strong>Werden meine Fotos hochgeladen?</strong><br>Nein. Die Auswertung läuft vollständig auf deinem Gerät. Details in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
-
-  <nav><a href="datenschutz.html">Datenschutz</a><a href="impressum.html">Impressum</a><a href="en.html">English</a></nav>
+  <div class="brand"><span class="chip c1">roast</span><span class="chip c2">my</span><span class="chip c3">roll.</span></div>
+  <a class="cta" href="https://apps.apple.com/de/app/roast-my-roll/id6830547374">Gratis im App Store laden</a>
+  <p id="msg">Du wirst gleich weitergeleitet. Klappt nicht? Tippe oben rechts auf <strong>⋯</strong> → <strong>Im Browser öffnen</strong>.</p>
 </main>
+<script>
+if (window.__store) document.querySelector('.cta').href = window.__store;
+if (!/^de/i.test(navigator.language || '')) {
+  document.documentElement.lang = 'en';
+  document.querySelector('.cta').textContent = 'Get it free on the App Store';
+  document.getElementById('msg').innerHTML = 'Redirecting you now. Not working? Tap <strong>⋯</strong> in the top right → <strong>Open in browser</strong>.';
+}
+</script>
 </body>
 </html>
