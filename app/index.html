@@ -45,12 +45,14 @@ body.in .inapp,body.in .arrow{display:block}
 <script>
 (function () {
   /* Store-Land aus der Browsersprache. Länder ohne Freischaltung landen im deutschen Store. Neue Länder: in LIVE ergänzen. */
-  var LIVE = ['de', 'at', 'ch', 'gb', 'ie', 'us', 'ca', 'nl', 'dk', 'se', 'no', 'fi', 'is', 'hr'];
-  var BARE = { en: 'gb', da: 'dk', sv: 'se', nb: 'no', nn: 'no', no: 'no', fi: 'fi', is: 'is', hr: 'hr', nl: 'nl', de: 'de' };
+  var LIVE = ['de', 'at', 'ch', 'gb', 'ie', 'us', 'ca', 'nl', 'dk', 'se', 'no', 'fi', 'is', 'hr',
+    'es', 'mx', 'ar', 'co', 'cl', 'pe', 'ec', 'uy', 'py', 'bo', 'cr', 'pa', 'do', 'gt', 'sv', 'hn', 'ni'];
+  var BARE = { es: 'es', en: 'gb', da: 'dk', sv: 'se', nb: 'no', nn: 'no', no: 'no', fi: 'fi', is: 'is', hr: 'hr', nl: 'nl', de: 'de' };
   var loc = (navigator.language || 'de-DE').toLowerCase().split('-');
   var cc = loc[1] && LIVE.indexOf(loc[1]) >= 0 ? loc[1] : (BARE[loc[0]] || 'de');
   var url = 'https://apps.apple.com/' + cc + '/app/roast-my-roll/id6830547374';
   var de = /^de/i.test(navigator.language || '');
+  var es = /^es/i.test(navigator.language || '');
   var ua = navigator.userAgent || '';
   /* In-App-Browser blockieren App-Store-Links: TikTok, Instagram, Facebook, Snapchat, LinkedIn … */
   var known = /BytedanceWebview|musical_ly|TikTok|Trill|Instagram|FBAN|FBAV|FB_IAB|Snapchat|LinkedInApp|Pinterest|Line\/|GSA\//i.test(ua);
@@ -59,7 +61,14 @@ body.in .inapp,body.in .arrow{display:block}
   var inApp = known || !realBrowser;
   var $ = function (id) { return document.getElementById(id); };
   $('cta').href = url;
-  if (!de) {
+  if (es) {
+    document.documentElement.lang = 'es';
+    $('cta').textContent = 'Descárgala gratis en el App Store';
+    $('msg').innerHTML = 'Te estamos redirigiendo. ¿No funciona? Toca <strong>⋯</strong> arriba a la derecha → <strong>Abrir en el navegador</strong>.';
+    $('h').textContent = 'Cómo llegar al App Store';
+    $('steps').innerHTML = '<li>Toca <span class="dots">⋯</span> arriba a la derecha</li><li>Elige <strong>«Abrir en el navegador»</strong></li><li>El App Store se abre solo.</li>';
+    $('copy').textContent = 'Copiar enlace (para Safari)';
+  } else if (!de) {
     document.documentElement.lang = 'en';
     $('cta').textContent = 'Get it free on the App Store';
     $('msg').innerHTML = 'Redirecting you now. Not working? Tap <strong>⋯</strong> in the top right → <strong>Open in browser</strong>.';
@@ -69,13 +78,13 @@ body.in .inapp,body.in .arrow{display:block}
   }
   if (inApp) {
     document.body.className = 'in';
-    $('msg').textContent = de ? 'Der Button funktioniert in dieser App manchmal nicht – dann wie oben beschrieben im Browser öffnen.' : 'The button sometimes doesn’t work inside this app – if so, open it in your browser as shown above.';
+    $('msg').textContent = de ? 'Der Button funktioniert in dieser App manchmal nicht – dann wie oben beschrieben im Browser öffnen.' : es ? 'A veces el botón no funciona dentro de esta app – en ese caso, ábrelo en el navegador como se indica arriba.' : 'The button sometimes doesn’t work inside this app – if so, open it in your browser as shown above.';
   } else {
     setTimeout(function () { location.replace(url); }, 150);
   }
   $('copy').addEventListener('click', function () {
     var link = 'https://webster286.github.io/roast-my-roll/app/';
-    var done = function () { $('copy').textContent = de ? 'Kopiert ✓ – jetzt in Safari einfügen' : 'Copied ✓ – now paste it into Safari'; };
+    var done = function () { $('copy').textContent = de ? 'Kopiert ✓ – jetzt in Safari einfügen' : es ? 'Copiado ✓ – ahora pégalo en Safari' : 'Copied ✓ – now paste it into Safari'; };
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(done, function () { prompt('', link); });
     else prompt('', link);
   });
